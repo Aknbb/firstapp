@@ -11,18 +11,48 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "lint:eslint": "eslint .",
+    "lint:stylelint": "stylelint **/*.css",
+    "lint": "npm run lint:eslint && npm run lint:stylelint",
+    "format": "prettier --print-width=100 --single-quote --trailing-comma all --write \"{src,__tests__}/**/.*js\" ",
+    "lint-staged": "lint-staged",
     "test": "react-scripts test --env=jsdom",
+    "coverage": "npm test -- --coverage",
+    "postcoverage":"istanbul check-coverage --statements 50 --functions 50 --branches 50 --lines 50 ",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "enzyme": "^3.6.0",
+    "enzyme-adapter-react-16": "^1.5.0",
+    "enzyme-to-json": "^3.3.4",
     "eslint": "^5.6.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.11.1",
+    "istanbul": "^0.4.5",
+    "jest": "^23.6.0",
+    "lint-staged": "^7.2.2",
+    "pre-commit": "^1.2.2",
     "prettier": "1.14.2",
     "stylelint": "^9.5.0",
     "stylelint-config-standard": "^18.2.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run format",
+      "git add"
+    ]
+  },
+  "pre-commit": "lint-staged",
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!src/index.js",
+      "!src/registerServiceWorker.js*"
+    ]
   }
 }
